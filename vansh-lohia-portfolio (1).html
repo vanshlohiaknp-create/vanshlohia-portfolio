@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vansh Lohia — Management Consultant Aspirant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS & RESET
+═══════════════════════════════════════════ */
+:root {
+  --cream:   #F5F2EC;
+  --cream2:  #EDE9E0;
+  --ink:     #0C0C0E;
+  --ink2:    #1A1A20;
+  --muted:   #7A7A82;
+  --muted2:  #A8A8B0;
+  --gold:    #B8933A;
+  --gold-lt: #D4A84B;
+  --glass:   rgba(245,242,236,0.65);
+  --border:  rgba(184,147,58,0.18);
+  --border2: rgba(12,12,14,0.08);
+  --shadow:  0 24px 64px rgba(12,12,14,0.08);
+  --r:       20px;
+  --r-sm:    12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Outfit',sans-serif;
+  font-weight:400;
+  line-height:1.65;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ═══════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════ */
+#cursor{
+  position:fixed;
+  width:10px;height:10px;
+  border-radius:50%;
+  background:var(--ink);
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.1s,width 0.3s,height 0.3s,background 0.3s;
+  mix-blend-mode:multiply;
+}
+#cursor-trail{
+  position:fixed;
+  width:36px;height:36px;
+  border-radius:50%;
+  border:1px solid var(--gold);
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform 0.18s ease,width 0.3s,height 0.3s,opacity 0.3s;
+  opacity:0.5;
+}
+body:has(a:hover) #cursor,
+body:has(button:hover) #cursor{ width:6px;height:6px; background:var(--gold); }
+body:has(a:hover) #cursor-trail,
+body:has(button:hover) #cursor-trail{ width:52px;height:52px;opacity:0.3; }
+
+/* ═══════════════════════════════════════════
+   GRAIN OVERLAY
+═══════════════════════════════════════════ */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:9997;
+  opacity:0.35;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════ */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--cream)}
+::-webkit-scrollbar-thumb{background:var(--gold)}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 5rem;
+  background:rgba(245,242,236,0.85);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border2);
+  transition:padding 0.3s;
+}
+nav.scrolled{padding:1rem 5rem;box-shadow:0 2px 32px rgba(12,12,14,0.06);}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;font-weight:600;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+  text-decoration:none;
+  cursor:none;
+}
+.nav-logo em{font-style:italic;color:var(--gold);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{
+  font-size:0.78rem;
+  font-weight:500;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-decoration:none;
+  position:relative;
+  cursor:none;
+  transition:color 0.25s;
+}
+.nav-links a::after{
+  content:'';
+  position:absolute;bottom:-3px;left:0;right:100%;
+  height:1px;background:var(--gold);
+  transition:right 0.3s ease;
+}
+.nav-links a:hover{color:var(--ink);}
+.nav-links a:hover::after{right:0;}
+.nav-cta{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:var(--ink);color:var(--cream) !important;
+  padding:0.6rem 1.4rem;
+  border-radius:100px;
+  font-size:0.78rem !important;
+  letter-spacing:0.06em !important;
+  text-transform:uppercase !important;
+  font-weight:600 !important;
+  transition:background 0.25s,transform 0.2s !important;
+  cursor:none;
+}
+.nav-cta::after{display:none !important;}
+.nav-cta:hover{background:var(--gold) !important;transform:translateY(-1px);}
+
+/* ═══════════════════════════════════════════
+   TICKER
+═══════════════════════════════════════════ */
+.ticker{
+  background:var(--ink);
+  padding:0.65rem 0;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.ticker-inner{
+  display:inline-flex;gap:0;
+  animation:ticker 28s linear infinite;
+}
+.ticker-inner span{
+  font-size:0.7rem;
+  font-weight:500;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--cream2);
+  padding:0 2.5rem;
+}
+.ticker-inner span.sep{color:var(--gold);padding:0;}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:7rem 5rem 4rem;
+  position:relative;
+  overflow:hidden;
+  gap:4rem;
+}
+.hero-bg-text{
+  position:absolute;
+  right:-3rem;bottom:-5rem;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(14rem,22vw,22rem);
+  font-weight:700;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(12,12,14,0.05);
+  line-height:1;
+  pointer-events:none;
+  user-select:none;
+  letter-spacing:-0.05em;
+}
+.hero-left{position:relative;z-index:2;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:0.7rem;
+  font-size:0.73rem;
+  font-weight:600;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:1.6rem;
+  opacity:0;
+  animation:riseIn 0.8s ease 0.1s forwards;
+}
+.hero-eyebrow::before{
+  content:'';width:28px;height:1px;background:var(--gold);
+}
+.hero-h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem,6vw,5.2rem);
+  font-weight:600;
+  line-height:1.05;
+  letter-spacing:-0.025em;
+  color:var(--ink);
+  margin-bottom:1rem;
+  opacity:0;
+  animation:riseIn 0.9s ease 0.25s forwards;
+}
+.hero-h1 em{
+  font-style:italic;font-weight:300;
+  background:linear-gradient(135deg,var(--gold),var(--gold-lt));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-sub{
+  font-size:1rem;
+  color:var(--muted);
+  font-weight:400;
+  line-height:1.7;
+  max-width:430px;
+  margin-bottom:2.5rem;
+  opacity:0;
+  animation:riseIn 0.9s ease 0.4s forwards;
+}
+.hero-sub strong{color:var(--ink);font-weight:600;}
+.hero-actions{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  opacity:0;
+  animation:riseIn 0.9s ease 0.55s forwards;
+}
+.btn-dark{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:var(--ink);color:var(--cream);
+  padding:0.9rem 2.2rem;border-radius:100px;
+  font-size:0.85rem;font-weight:600;
+  letter-spacing:0.04em;
+  text-decoration:none;cursor:none;
+  transition:background 0.25s,transform 0.2s,box-shadow 0.25s;
+  box-shadow:0 4px 20px rgba(12,12,14,0.15);
+}
+.btn-dark:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 8px 32px rgba(184,147,58,0.35);}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:transparent;color:var(--ink);
+  padding:0.9rem 2.2rem;border-radius:100px;
+  font-size:0.85rem;font-weight:500;
+  letter-spacing:0.04em;
+  text-decoration:none;cursor:none;
+  border:1.5px solid rgba(12,12,14,0.2);
+  transition:border-color 0.25s,background 0.25s,transform 0.2s;
+}
+.btn-outline:hover{border-color:var(--gold);background:rgba(184,147,58,0.06);transform:translateY(-2px);}
+.hero-metrics{
+  display:flex;gap:2.5rem;
+  margin-top:3.5rem;
+  padding-top:2.5rem;
+  border-top:1px solid var(--border2);
+  opacity:0;
+  animation:riseIn 0.9s ease 0.7s forwards;
+}
+.metric-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.6rem;font-weight:700;
+  line-height:1;color:var(--ink);
+  letter-spacing:-0.03em;
+}
+.metric-val sup{font-size:1rem;color:var(--gold);}
+.metric-lbl{font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:0.3rem;}
+
+.hero-right{
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:2;
+  opacity:0;
+  animation:riseIn 1s ease 0.3s forwards;
+}
+.hero-img-wrap{
+  position:relative;
+  width:360px;height:420px;
+}
+.hero-img-box{
+  width:100%;height:100%;
+  border-radius:28px;
+  background:linear-gradient(145deg,var(--cream2),#DDD8CE);
+  border:1.5px solid var(--border2);
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow);
+}
+.hero-img-placeholder{
+  font-family:'Cormorant Garamond',serif;
+  font-size:4rem;font-weight:700;
+  color:rgba(12,12,14,0.12);
+  letter-spacing:-0.05em;
+}
+.hero-img-badge{
+  position:absolute;
+  bottom:-1.2rem;right:-1.5rem;
+  background:var(--ink);
+  color:var(--cream);
+  border-radius:16px;
+  padding:1rem 1.4rem;
+  box-shadow:var(--shadow);
+  font-size:0.78rem;
+  font-weight:500;
+  line-height:1.4;
+  max-width:170px;
+}
+.hero-img-badge strong{
+  display:block;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;font-weight:700;
+  color:var(--gold-lt);
+  margin-bottom:0.1rem;
+}
+.hero-img-dot{
+  position:absolute;
+  top:-1rem;left:-1rem;
+  width:48px;height:48px;
+  border-radius:50%;
+  background:var(--cream);
+  border:1.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;
+  box-shadow:var(--shadow);
+  animation:floatBob 4s ease-in-out infinite;
+}
+@keyframes floatBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+@keyframes riseIn{
+  from{opacity:0;transform:translateY(28px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ═══════════════════════════════════════════
+   SHARED SECTION STYLES
+═══════════════════════════════════════════ */
+section{padding:7rem 5rem;}
+.sec-tag{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  font-size:0.72rem;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:0.9rem;
+}
+.sec-tag::before{content:'';width:20px;height:1px;background:var(--gold);}
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.4rem,4.5vw,3.8rem);
+  font-weight:600;
+  line-height:1.05;
+  letter-spacing:-0.025em;
+  color:var(--ink);
+  margin-bottom:1rem;
+}
+.sec-title em{font-style:italic;font-weight:300;color:var(--muted);}
+.sec-sub{font-size:0.95rem;color:var(--muted);max-width:500px;line-height:1.75;margin-bottom:3.5rem;}
+
+/* ═══════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════ */
+#about{background:var(--ink);color:var(--cream);overflow:hidden;}
+#about .sec-tag{color:var(--gold-lt);}
+#about .sec-title{color:var(--cream);}
+#about .sec-title em{color:var(--muted2);}
+#about .sec-sub{color:var(--muted2);}
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1.1fr 0.9fr;
+  gap:5rem;
+  align-items:start;
+}
+.about-story p{
+  font-size:1.05rem;
+  color:rgba(245,242,236,0.75);
+  line-height:1.9;
+  margin-bottom:1.4rem;
+}
+.about-story p strong{color:var(--cream);}
+.about-philosophy{
+  margin-top:2.5rem;
+  padding:2rem 2.5rem;
+  border-left:2px solid var(--gold);
+  background:rgba(245,242,236,0.04);
+  border-radius:0 16px 16px 0;
+}
+.about-philosophy p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem;font-style:italic;
+  color:var(--cream);line-height:1.6;
+  margin:0;
+}
+
+.about-cards{display:flex;flex-direction:column;gap:1.2rem;}
+.about-card{
+  background:rgba(245,242,236,0.05);
+  border:1px solid rgba(245,242,236,0.1);
+  border-radius:var(--r);
+  padding:1.6rem 1.8rem;
+  backdrop-filter:blur(8px);
+  transition:border-color 0.25s,background 0.25s,transform 0.25s;
+}
+.about-card:hover{
+  border-color:rgba(184,147,58,0.4);
+  background:rgba(184,147,58,0.06);
+  transform:translateX(6px);
+}
+.about-card-icon{font-size:1.5rem;margin-bottom:0.7rem;}
+.about-card-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:600;
+  color:var(--cream);margin-bottom:0.3rem;
+}
+.about-card-text{font-size:0.85rem;color:var(--muted2);line-height:1.6;}
+
+/* ═══════════════════════════════════════════
+   EXPERIENCE
+═══════════════════════════════════════════ */
+#experience{background:var(--cream);}
+.exp-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+.exp-card{
+  background:var(--cream);
+  border:1.5px solid var(--border2);
+  border-radius:24px;
+  padding:2.4rem 2.2rem;
+  position:relative;
+  overflow:hidden;
+  transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s;
+}
+.exp-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-lt));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s ease;
+}
+.exp-card:hover{
+  border-color:rgba(184,147,58,0.3);
+  transform:translateY(-6px);
+  box-shadow:0 20px 56px rgba(12,12,14,0.1);
+}
+.exp-card:hover::before{transform:scaleX(1);}
+.exp-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3.5rem;font-weight:700;
+  color:rgba(12,12,14,0.06);
+  line-height:1;
+  margin-bottom:1.5rem;
+  letter-spacing:-0.05em;
+}
+.exp-role{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-weight:600;
+  color:var(--ink);margin-bottom:0.25rem;
+  line-height:1.2;
+}
+.exp-org{
+  font-size:0.78rem;font-weight:600;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1rem;
+}
+.exp-desc{font-size:0.87rem;color:var(--muted);line-height:1.7;margin-bottom:1.4rem;}
+.exp-tags{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.exp-tag{
+  font-size:0.68rem;font-weight:500;
+  padding:0.25rem 0.7rem;
+  border-radius:100px;
+  border:1px solid var(--border2);
+  color:var(--muted);
+  letter-spacing:0.04em;
+}
+
+/* ═══════════════════════════════════════════
+   PROJECTS / CASE STUDIES
+═══════════════════════════════════════════ */
+#projects{background:var(--cream2);}
+.projects-grid{display:flex;flex-direction:column;gap:1.5rem;}
+.project-card{
+  display:grid;
+  grid-template-columns:0.4fr 1fr 1fr;
+  gap:3rem;
+  align-items:start;
+  background:var(--cream);
+  border:1.5px solid var(--border2);
+  border-radius:24px;
+  padding:2.8rem 3rem;
+  transition:border-color 0.3s,box-shadow 0.3s,transform 0.3s;
+  position:relative;overflow:hidden;
+}
+.project-card::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(184,147,58,0.03),transparent 60%);
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.project-card:hover{
+  border-color:rgba(184,147,58,0.35);
+  box-shadow:0 16px 48px rgba(12,12,14,0.08);
+  transform:translateY(-3px);
+}
+.project-card:hover::after{opacity:1;}
+.project-label{
+  font-size:0.7rem;font-weight:600;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);
+  display:flex;align-items:center;gap:0.5rem;
+}
+.project-label::before{content:'';width:14px;height:1px;background:var(--gold);}
+.project-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3.5rem;font-weight:700;
+  color:rgba(12,12,14,0.07);
+  line-height:1;margin-top:0.5rem;
+}
+.project-left{padding-right:1rem;border-right:1px solid var(--border2);}
+.project-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;font-weight:600;
+  color:var(--ink);margin-bottom:0.6rem;
+  line-height:1.2;
+}
+.project-result{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.4rem;font-weight:700;
+  color:var(--gold);
+  letter-spacing:-0.03em;
+  line-height:1;
+  margin-bottom:0.4rem;
+}
+.project-result-label{font-size:0.8rem;color:var(--muted);font-weight:500;}
+.case-steps{display:flex;flex-direction:column;gap:0.8rem;}
+.case-step{
+  display:flex;gap:0.8rem;align-items:flex-start;
+}
+.step-dot{
+  width:5px;height:5px;min-width:5px;
+  border-radius:50%;
+  background:var(--gold);
+  margin-top:0.55rem;
+}
+.step-content{}
+.step-label{font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.15rem;}
+.step-text{font-size:0.85rem;color:var(--muted);line-height:1.5;}
+
+/* ═══════════════════════════════════════════
+   ACHIEVEMENTS
+═══════════════════════════════════════════ */
+#achievements{background:var(--ink);}
+#achievements .sec-title{color:var(--cream);}
+#achievements .sec-tag{color:var(--gold-lt);}
+#achievements .sec-sub{color:var(--muted2);}
+
+.ach-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.2rem;
+}
+.ach-card{
+  background:rgba(245,242,236,0.04);
+  border:1px solid rgba(245,242,236,0.08);
+  border-radius:20px;
+  padding:1.8rem 1.6rem;
+  backdrop-filter:blur(8px);
+  transition:border-color 0.25s,background 0.25s,transform 0.25s;
+}
+.ach-card:hover{
+  border-color:rgba(184,147,58,0.5);
+  background:rgba(184,147,58,0.06);
+  transform:translateY(-5px);
+}
+.ach-icon{font-size:1.8rem;margin-bottom:1rem;}
+.ach-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-weight:600;
+  color:var(--cream);margin-bottom:0.4rem;
+  line-height:1.3;
+}
+.ach-event{font-size:0.78rem;color:var(--muted2);line-height:1.5;margin-bottom:0.8rem;}
+.ach-badge{
+  display:inline-block;
+  font-size:0.63rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.2rem 0.65rem;border-radius:100px;
+  background:rgba(184,147,58,0.15);
+  color:var(--gold-lt);
+  border:1px solid rgba(184,147,58,0.3);
+}
+
+/* ═══════════════════════════════════════════
+   SKILLS
+═══════════════════════════════════════════ */
+#skills{background:var(--cream);}
+.skills-layout{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+.skill-col{
+  background:var(--cream2);
+  border:1.5px solid var(--border2);
+  border-radius:24px;
+  padding:2.4rem 2.2rem;
+  position:relative;
+  overflow:hidden;
+  transition:border-color 0.3s,transform 0.3s;
+}
+.skill-col:hover{border-color:rgba(184,147,58,0.4);transform:translateY(-4px);}
+.skill-col-icon{font-size:2rem;margin-bottom:1.2rem;}
+.skill-col-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;font-weight:600;
+  color:var(--ink);margin-bottom:0.3rem;
+}
+.skill-col-sub{font-size:0.78rem;color:var(--muted);margin-bottom:1.8rem;letter-spacing:0.03em;}
+.skill-items{display:flex;flex-direction:column;gap:0.85rem;}
+.skill-item{}
+.skill-item-label{
+  display:flex;justify-content:space-between;
+  font-size:0.82rem;font-weight:500;color:var(--ink);
+  margin-bottom:0.4rem;
+}
+.skill-item-label span{font-size:0.75rem;color:var(--muted);}
+.skill-bar{
+  height:3px;
+  background:rgba(12,12,14,0.08);
+  border-radius:100px;
+  overflow:hidden;
+}
+.skill-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--gold),var(--gold-lt));
+  border-radius:100px;
+  width:0;
+  transition:width 1.2s ease;
+}
+
+/* ═══════════════════════════════════════════
+   SPEAKING & LEADERSHIP
+═══════════════════════════════════════════ */
+#speaking{background:var(--cream2);}
+.speak-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3rem;
+  align-items:center;
+}
+.speak-visual{
+  background:var(--ink);
+  border-radius:28px;
+  padding:3rem;
+  display:flex;flex-direction:column;
+  gap:1.5rem;
+  position:relative;overflow:hidden;
+}
+.speak-visual::before{
+  content:'';
+  position:absolute;
+  width:300px;height:300px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(184,147,58,0.15),transparent 70%);
+  top:-80px;right:-80px;
+  pointer-events:none;
+}
+.speak-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:500;
+  font-style:italic;
+  color:var(--cream);
+  line-height:1.5;
+  position:relative;
+}
+.speak-quote::before{
+  content:'\201C';
+  font-size:5rem;
+  color:var(--gold);
+  opacity:0.4;
+  line-height:0.5;
+  display:block;
+  margin-bottom:0.5rem;
+  font-style:normal;
+}
+.speak-attr{font-size:0.8rem;color:var(--muted2);letter-spacing:0.06em;}
+.speak-events{display:flex;flex-direction:column;gap:1rem;}
+.speak-event{
+  background:var(--cream);
+  border:1.5px solid var(--border2);
+  border-radius:16px;
+  padding:1.4rem 1.6rem;
+  display:flex;gap:1.2rem;align-items:center;
+  transition:border-color 0.25s,transform 0.25s;
+}
+.speak-event:hover{border-color:rgba(184,147,58,0.4);transform:translateX(4px);}
+.speak-event-icon{
+  width:44px;height:44px;min-width:44px;
+  border-radius:12px;
+  background:var(--cream2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;
+}
+.speak-event-title{font-weight:600;font-size:0.9rem;color:var(--ink);margin-bottom:0.15rem;}
+.speak-event-sub{font-size:0.78rem;color:var(--muted);}
+
+/* ═══════════════════════════════════════════
+   CURRENT FOCUS
+═══════════════════════════════════════════ */
+#focus{background:var(--ink);overflow:hidden;}
+#focus .sec-title{color:var(--cream);}
+#focus .sec-tag{color:var(--gold-lt);}
+#focus .sec-sub{color:var(--muted2);}
+.focus-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:1.2rem;
+}
+.focus-card{
+  background:rgba(245,242,236,0.04);
+  border:1px solid rgba(245,242,236,0.08);
+  border-radius:20px;
+  padding:2rem 1.6rem;
+  text-align:center;
+  transition:background 0.25s,border-color 0.25s,transform 0.25s;
+}
+.focus-card:hover{
+  background:rgba(184,147,58,0.08);
+  border-color:rgba(184,147,58,0.4);
+  transform:translateY(-6px);
+}
+.focus-icon{font-size:1.8rem;margin-bottom:1rem;}
+.focus-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.95rem;font-weight:600;
+  color:var(--cream);line-height:1.3;
+}
+
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+#contact{background:var(--cream);}
+.contact-inner{
+  background:var(--ink);
+  border-radius:32px;
+  padding:6rem 5rem;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5rem;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+.contact-inner::before{
+  content:'';
+  position:absolute;
+  width:500px;height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(184,147,58,0.1),transparent 70%);
+  top:-200px;right:-150px;
+  pointer-events:none;
+}
+.contact-h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.4rem,4vw,3.5rem);
+  font-weight:600;
+  line-height:1.1;
+  letter-spacing:-0.025em;
+  color:var(--cream);
+  margin-bottom:1rem;
+}
+.contact-h2 em{font-style:italic;font-weight:300;color:var(--gold-lt);}
+.contact-sub{font-size:0.95rem;color:var(--muted2);line-height:1.7;margin-bottom:2rem;}
+.contact-links{display:flex;flex-direction:column;gap:1rem;}
+.contact-link{
+  display:flex;align-items:center;gap:1rem;
+  background:rgba(245,242,236,0.05);
+  border:1px solid rgba(245,242,236,0.1);
+  border-radius:16px;
+  padding:1.2rem 1.5rem;
+  text-decoration:none;cursor:none;
+  transition:border-color 0.25s,background 0.25s,transform 0.25s;
+}
+.contact-link:hover{
+  border-color:rgba(184,147,58,0.5);
+  background:rgba(184,147,58,0.08);
+  transform:translateX(5px);
+}
+.contact-link-icon{
+  width:40px;height:40px;
+  border-radius:10px;
+  background:rgba(245,242,236,0.08);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+}
+.contact-link-label{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:0.1rem;}
+.contact-link-val{font-size:0.88rem;color:var(--cream);font-weight:500;}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer{
+  background:var(--ink);
+  border-top:1px solid rgba(245,242,236,0.07);
+  padding:2rem 5rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-weight:600;
+  color:var(--cream);
+}
+.footer-logo em{font-style:italic;color:var(--gold);}
+footer p{font-size:0.78rem;color:var(--muted2);}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-links a{
+  font-size:0.72rem;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted2);text-decoration:none;cursor:none;
+  transition:color 0.2s;
+}
+.footer-links a:hover{color:var(--gold);}
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.75s ease,transform 0.75s ease;}
+.reveal.up{opacity:1;transform:translateY(0);}
+.reveal-d1{transition-delay:0.1s;}
+.reveal-d2{transition-delay:0.2s;}
+.reveal-d3{transition-delay:0.3s;}
+.reveal-d4{transition-delay:0.4s;}
+.reveal-d5{transition-delay:0.5s;}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE (Basic)
+═══════════════════════════════════════════ */
+@media(max-width:1100px){
+  nav,section,footer{padding-left:3rem;padding-right:3rem;}
+  #hero{grid-template-columns:1fr;padding:8rem 3rem 4rem;gap:3rem;}
+  .hero-right{justify-content:flex-start;}
+  .about-grid,#experience .exp-grid,#skills .skills-layout{grid-template-columns:1fr;}
+  .project-card{grid-template-columns:1fr;gap:1.5rem;}
+  .project-left{border-right:none;padding-right:0;border-bottom:1px solid var(--border2);padding-bottom:1.5rem;}
+  .ach-grid{grid-template-columns:repeat(2,1fr);}
+  .focus-grid{grid-template-columns:repeat(3,1fr);}
+  .contact-inner{grid-template-columns:1fr;padding:3.5rem 2.5rem;gap:2.5rem;}
+  .speak-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:1rem;text-align:center;}
+}
+@media(max-width:680px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  section{padding:5rem 1.5rem;}
+  .hero-h1{font-size:2.8rem;}
+  .ach-grid,.focus-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+
+<!-- ── NAV ── -->
+<nav id="mainNav">
+  <a href="#hero" class="nav-logo">Vansh <em>Lohia</em></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#achievements">Wins</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact" class="nav-cta">Let's Connect ↗</a></li>
+  </ul>
+</nav>
+
+<!-- ── TICKER ── -->
+<div class="ticker" style="margin-top:68px;">
+  <div class="ticker-inner">
+    <span>Management Consultant Aspirant</span><span class="sep">✦</span>
+    <span>Founder @ Glorify Digital</span><span class="sep">✦</span>
+    <span>CAT 2027</span><span class="sep">✦</span>
+    <span>Sales & Growth Operator</span><span class="sep">✦</span>
+    <span>Case Study Competitor</span><span class="sep">✦</span>
+    <span>Kanpur, India</span><span class="sep">✦</span>
+    <span>MBB Mindset</span><span class="sep">✦</span>
+    <span>Management Consultant Aspirant</span><span class="sep">✦</span>
+    <span>Founder @ Glorify Digital</span><span class="sep">✦</span>
+    <span>CAT 2027</span><span class="sep">✦</span>
+    <span>Sales & Growth Operator</span><span class="sep">✦</span>
+    <span>Case Study Competitor</span><span class="sep">✦</span>
+    <span>Kanpur, India</span><span class="sep">✦</span>
+    <span>MBB Mindset</span><span class="sep">✦</span>
+  </div>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg-text">VL</div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">MBA · BBA 2025–28 · Kanpur</div>
+    <h1 class="hero-h1">
+      Building Businesses.<br>
+      Solving Problems.<br>
+      <em>Thinking Like</em><br>
+      a Consultant.
+    </h1>
+    <p class="hero-sub">
+      <strong>Management Consultant Aspirant</strong> | Founder @ Glorify Digital | CAT 2027<br>
+      Early-stage operator with real execution across sales, strategy, and digital growth.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-dark">View My Work ↗</a>
+      <a href="#contact" class="btn-outline">Let's Connect →</a>
+    </div>
+    <div class="hero-metrics">
+      <div>
+        <div class="metric-val">3<sup>×</sup></div>
+        <div class="metric-lbl">Lead Growth</div>
+      </div>
+      <div>
+        <div class="metric-val">₹19K<sup>+</sup></div>
+        <div class="metric-lbl">Revenue Generated</div>
+      </div>
+      <div>
+        <div class="metric-val">110<sup>%</sup></div>
+        <div class="metric-lbl">Sales Growth</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <div class="hero-img-box">
+        <!-- Replace with: <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;" alt="Vansh Lohia"> -->
+        <div class="hero-img-placeholder">VL</div>
+      </div>
+      <div class="hero-img-badge">
+        <strong>Glorify<br>Digital</strong>
+        Founder & Operator
+      </div>
+      <div class="hero-img-dot">🎯</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="sec-tag reveal">The Story</div>
+  <h2 class="sec-title reveal">From Execution<br><em>to Strategy</em></h2>
+  <div class="about-grid">
+    <div class="about-story reveal">
+      <p>I didn't start with a plan. I started with a job. My early exposure in a <strong>Finance & Loan Department</strong> taught me something textbooks skip — trust is the only real product. You don't sell a loan. You sell confidence and reliability.</p>
+      <p>Then came <strong>Reliance</strong>. Ground-level sales. Real rejections. Real conversions. I learned that revenue isn't a slide in a pitch deck — it's built through daily discipline, customer empathy, and ruthless execution.</p>
+      <p>That experience sparked a question: <em>why do most businesses struggle to grow despite having great products?</em> The answer was almost always marketing. So I built <strong>Glorify Digital</strong> — a digital marketing agency helping brands grow through SEO, Social Media, Paid Ads, and Content Strategy.</p>
+      <p>Today I'm a <strong>BBA student (2025–28)</strong> preparing for <strong>CAT 2027</strong> with a clear destination: a top IIM, then MBB consulting. But the journey isn't paused — it's accelerating.</p>
+      <div class="about-philosophy">
+        <p>"I believe in execution over theory, clarity over noise, and building things that create real impact."</p>
+      </div>
+    </div>
+    <div class="about-cards reveal reveal-d2">
+      <div class="about-card">
+        <div class="about-card-icon">🏢</div>
+        <div class="about-card-title">Glorify Digital — Founder</div>
+        <div class="about-card-text">SEO · Social Media Marketing · Paid Ads · Content Strategy. Real clients. Measurable results. Built from zero.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🎓</div>
+        <div class="about-card-title">BBA · 2025–2028</div>
+        <div class="about-card-text">Business Administration student with a focus on strategy, marketing, and consulting fundamentals. Active in competitions and B-school ecosystems.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🧠</div>
+        <div class="about-card-title">CAT 2027 → Top IIM → MBB</div>
+        <div class="about-card-text">Not just a goal — a roadmap. Building the analytical rigor, case-solving ability, and leadership profile that top consulting firms look for.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">📍</div>
+        <div class="about-card-title">Kanpur, India</div>
+        <div class="about-card-text">Building from tier-2 India with a tier-1 mindset. Active in E-Cell, MSME sessions, and entrepreneurship ecosystems.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience">
+  <div class="sec-tag reveal">Track Record</div>
+  <h2 class="sec-title reveal">Where the Work<br><em>Actually Happened</em></h2>
+  <p class="sec-sub reveal">Every role shaped a lens. Finance gave me trust. Sales gave me discipline. Founding gave me everything else.</p>
+  <div class="exp-grid">
+    <div class="exp-card reveal">
+      <div class="exp-num">01</div>
+      <div class="exp-role">Finance & Loan Department</div>
+      <div class="exp-org">Early Career · On-Ground Role</div>
+      <div class="exp-desc">Handled real client portfolios and financial product conversations from day one. Built deep intuition around trust-based selling, client communication, and financial product understanding — skills that no classroom teaches at this speed.</div>
+      <div class="exp-tags">
+        <span class="exp-tag">Client Handling</span>
+        <span class="exp-tag">Financial Products</span>
+        <span class="exp-tag">Trust Selling</span>
+      </div>
+    </div>
+    <div class="exp-card reveal reveal-d2">
+      <div class="exp-num">02</div>
+      <div class="exp-role">Sales Executive</div>
+      <div class="exp-org">Reliance · Field Sales</div>
+      <div class="exp-desc">Ground-level sales execution at one of India's largest conglomerates. Learned customer psychology, objection handling, and what it actually means to be revenue-driven. Generated ₹19,500+ in direct sales. Numbers don't lie.</div>
+      <div class="exp-tags">
+        <span class="exp-tag">Direct Sales</span>
+        <span class="exp-tag">Customer Psychology</span>
+        <span class="exp-tag">Revenue Execution</span>
+        <span class="exp-tag">Certified</span>
+      </div>
+    </div>
+    <div class="exp-card reveal reveal-d3">
+      <div class="exp-num">03</div>
+      <div class="exp-role">Founder</div>
+      <div class="exp-org">Glorify Digital · Digital Agency</div>
+      <div class="exp-desc">Built a digital marketing agency from scratch. Worked on real clients across industries, delivering measurable growth through SEO, paid campaigns, social media strategy, and content systems. Early-stage but execution-first.</div>
+      <div class="exp-tags">
+        <span class="exp-tag">SEO</span>
+        <span class="exp-tag">Paid Ads</span>
+        <span class="exp-tag">Social Media</span>
+        <span class="exp-tag">Content Strategy</span>
+        <span class="exp-tag">Client Delivery</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS / CASE STUDIES ── -->
+<section id="projects">
+  <div class="sec-tag reveal">Case Studies</div>
+  <h2 class="sec-title reveal">Proof Over<br><em>Promises</em></h2>
+  <p class="sec-sub reveal">Three real problems. Three executed strategies. Three results that speak for themselves.</p>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-left">
+        <div class="project-label">Client · Fitness</div>
+        <div class="project-num">01</div>
+        <div class="project-title">Gym Client Lead Growth</div>
+        <div class="project-result">3×</div>
+        <div class="project-result-label">Leads in 30 Days</div>
+      </div>
+      <div>
+        <div class="case-steps">
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Problem</div><div class="step-text">Local gym struggling with stagnant walk-ins despite strong offline reputation. Zero structured digital presence.</div></div></div>
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Strategy</div><div class="step-text">Built a full-funnel Instagram presence with transformation content, local hashtag targeting, and a referral incentive loop.</div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="case-steps">
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Execution</div><div class="step-text">30-day content calendar, Meta lead-gen ads with a ₹1,500 test budget, landing page optimisation, and daily response management.</div></div></div>
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Result</div><div class="step-text">3× increase in qualified leads within 30 days. Cost-per-lead reduced by 58%. Client retained for ongoing management.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-left">
+        <div class="project-label">Client · eCommerce</div>
+        <div class="project-num">02</div>
+        <div class="project-title">eCommerce Brand Sales Growth</div>
+        <div class="project-result">110%</div>
+        <div class="project-result-label">Instagram-Driven Sales</div>
+      </div>
+      <div>
+        <div class="case-steps">
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Problem</div><div class="step-text">eCommerce brand with good products but no social strategy. Instagram was dormant, website traffic minimal, and repeat purchases rare.</div></div></div>
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Strategy</div><div class="step-text">Repositioned brand voice, built a consistent visual identity, and designed a content system mixing product posts, UGC-style reels, and story funnels.</div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="case-steps">
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Execution</div><div class="step-text">Weekly content drops, DM automation for warm leads, bio link optimisation, and retargeting ads for cart abandoners.</div></div></div>
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Result</div><div class="step-text">110% increase in Instagram-attributed sales. Follower engagement tripled. Profile visits up 4× within 45 days.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-left">
+        <div class="project-label">Direct · Sales</div>
+        <div class="project-num">03</div>
+        <div class="project-title">Direct Sales Execution</div>
+        <div class="project-result">₹19.5K</div>
+        <div class="project-result-label">Revenue Generated</div>
+      </div>
+      <div>
+        <div class="case-steps">
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Problem</div><div class="step-text">Ground-level sales role requiring individual quota achievement in a competitive, price-sensitive consumer market.</div></div></div>
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Strategy</div><div class="step-text">Mapped customer segments, prioritised high-intent leads, and designed a conversation framework built on product education rather than hard selling.</div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="case-steps">
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Execution</div><div class="step-text">Daily prospecting targets, consistent follow-ups, trust-first conversations, and systematic objection handling using real-world customer psychology.</div></div></div>
+          <div class="case-step"><div class="step-dot"></div><div class="step-content"><div class="step-label">Result</div><div class="step-text">Generated ₹19,500+ in direct revenue. Certified by Reliance. Built the foundation for understanding revenue at the most granular level.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── ACHIEVEMENTS ── -->
+<section id="achievements">
+  <div class="sec-tag reveal">Recognition</div>
+  <h2 class="sec-title reveal">The Record,<br><em>Still Growing</em></h2>
+  <p class="sec-sub reveal">Competitions, stages, and certifications — each one a proof point, not a decoration.</p>
+  <div class="ach-grid">
+    <div class="ach-card reveal">
+      <div class="ach-icon">🏆</div>
+      <div class="ach-title">Anubhuti — Case Study Competition</div>
+      <div class="ach-event">Business case analysis under real constraints. Strategy presentation to a judging panel.</div>
+      <span class="ach-badge">Case Study</span>
+    </div>
+    <div class="ach-card reveal reveal-d1">
+      <div class="ach-icon">💡</div>
+      <div class="ach-title">Aarambh — Business Idea Competition</div>
+      <div class="ach-event">Pitched a business concept from scratch — ideation, validation, and market opportunity.</div>
+      <span class="ach-badge">Entrepreneurship</span>
+    </div>
+    <div class="ach-card reveal reveal-d2">
+      <div class="ach-icon">🌐</div>
+      <div class="ach-title">International Conference Participant</div>
+      <div class="ach-event">Represented institute at an international-level academic and business conference.</div>
+      <span class="ach-badge">International</span>
+    </div>
+    <div class="ach-card reveal reveal-d3">
+      <div class="ach-icon">🎖️</div>
+      <div class="ach-title">Mahindra Certificate</div>
+      <div class="ach-event">Industry certification from one of India's leading conglomerate-affiliated programs.</div>
+      <span class="ach-badge">Industry</span>
+    </div>
+    <div class="ach-card reveal">
+      <div class="ach-icon">📊</div>
+      <div class="ach-title">National Finance Quiz</div>
+      <div class="ach-event">National-level participation in finance and business knowledge competition.</div>
+      <span class="ach-badge">National</span>
+    </div>
+    <div class="ach-card reveal reveal-d1">
+      <div class="ach-icon">✅</div>
+      <div class="ach-title">Reliance Certification</div>
+      <div class="ach-event">Certified for sales execution and performance at Reliance after field role completion.</div>
+      <span class="ach-badge">Corporate</span>
+    </div>
+    <div class="ach-card reveal reveal-d2">
+      <div class="ach-icon">🎤</div>
+      <div class="ach-title">Allen Talk — Speaker</div>
+      <div class="ach-event">Selected to speak at Allen Talk — public speaking event for high-potential students.</div>
+      <span class="ach-badge">Public Speaking</span>
+    </div>
+    <div class="ach-card reveal reveal-d3">
+      <div class="ach-icon">🚀</div>
+      <div class="ach-title">E-Cell & MSME Participation</div>
+      <div class="ach-event">Active member of entrepreneurship ecosystem events, sessions, and panels at college and city level.</div>
+      <span class="ach-badge">Ecosystem</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="sec-tag reveal">Capabilities</div>
+  <h2 class="sec-title reveal">Skills That<br><em>Actually Matter</em></h2>
+  <p class="sec-sub reveal">Not a list of buzzwords. A set of real competencies built through actual work, study, and execution.</p>
+  <div class="skills-layout">
+    <div class="skill-col reveal">
+      <div class="skill-col-icon">🧠</div>
+      <div class="skill-col-title">Business & Strategy</div>
+      <div class="skill-col-sub">Consulting-grade thinking applied to real problems</div>
+      <div class="skill-items">
+        <div class="skill-item">
+          <div class="skill-item-label">Business Analysis <span>Advanced</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="82"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-item-label">Market Research <span>Strong</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-item-label">Case Solving <span>Active Practice</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="70"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-item-label">Strategy Frameworks <span>Developing</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="65"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="skill-col reveal reveal-d2">
+      <div class="skill-col-icon">📱</div>
+      <div class="skill-col-title">Marketing & Growth</div>
+      <div class="skill-col-sub">Proven through real clients and measurable outcomes</div>
+      <div class="skill-items">
+        <div class="skill-item">
+          <div class="skill-item-label">Social Media Marketing <span>Expert</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="90"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-item-label">SEO <span>Proficient</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-item-label">Paid Ads (Meta) <span>Proficient</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="72"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-item-label">Content Strategy <span>Strong</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="80"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="skill-col reveal reveal-d3">
+      <div class="skill-col-icon">🛠️</div>
+      <div class="skill-col-title">Tools & Execution</div>
+      <div class="skill-col-sub">The operational layer that turns strategy into output</div>
+      <div class="skill-items">
+        <div class="skill-item">
+          <div class="skill-item-label">MS Excel <span>Advanced</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="80"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-item-label">PowerPoint / Canva <span>Expert</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="88"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-item-label">Power BI <span>Learning</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="38"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-item-label">Public Speaking <span>Strong</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="78"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SPEAKING & LEADERSHIP ── -->
+<section id="speaking">
+  <div class="sec-tag reveal">Leadership</div>
+  <h2 class="sec-title reveal">Stages, Rooms,<br><em>& Real Conversations</em></h2>
+  <div class="speak-grid">
+    <div class="speak-visual reveal">
+      <div class="speak-quote">
+        "The best ideas mean nothing until someone with the confidence to articulate them stands in front of a room."
+      </div>
+      <div class="speak-attr">— Vansh Lohia · Allen Talk, 2025</div>
+    </div>
+    <div class="speak-events reveal reveal-d2">
+      <div class="speak-event">
+        <div class="speak-event-icon">🎤</div>
+        <div>
+          <div class="speak-event-title">Speaker — Allen Talk</div>
+          <div class="speak-event-sub">Selected to present to a student audience on entrepreneurship, mindset, and execution.</div>
+        </div>
+      </div>
+      <div class="speak-event">
+        <div class="speak-event-icon">🌐</div>
+        <div>
+          <div class="speak-event-title">International Conference Delegate</div>
+          <div class="speak-event-sub">Represented Allenhouse Business School at an international academic conference.</div>
+        </div>
+      </div>
+      <div class="speak-event">
+        <div class="speak-event-icon">🚀</div>
+        <div>
+          <div class="speak-event-title">E-Cell & Entrepreneurship Events</div>
+          <div class="speak-event-sub">Active participant across startup ecosystem events, panels, and MSME development sessions.</div>
+        </div>
+      </div>
+      <div class="speak-event">
+        <div class="speak-event-icon">🏅</div>
+        <div>
+          <div class="speak-event-title">Multiple B-School Competitions</div>
+          <div class="speak-event-sub">Competed in case studies, business idea pitches, and finance quizzes at college and national level.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CURRENT FOCUS ── -->
+<section id="focus">
+  <div class="sec-tag reveal">Right Now</div>
+  <h2 class="sec-title reveal">What I'm<br><em>Building Toward</em></h2>
+  <p class="sec-sub reveal">Five parallel tracks. One direction: becoming the kind of operator and thinker that top firms fight to hire.</p>
+  <div class="focus-grid">
+    <div class="focus-card reveal">
+      <div class="focus-icon">🏢</div>
+      <div class="focus-title">Scaling Glorify Digital</div>
+    </div>
+    <div class="focus-card reveal reveal-d1">
+      <div class="focus-icon">📁</div>
+      <div class="focus-title">Building Case Study Portfolio</div>
+    </div>
+    <div class="focus-card reveal reveal-d2">
+      <div class="focus-icon">🤝</div>
+      <div class="focus-title">Client Acquisition Systems</div>
+    </div>
+    <div class="focus-card reveal reveal-d3">
+      <div class="focus-icon">📐</div>
+      <div class="focus-title">CAT 2027 Preparation</div>
+    </div>
+    <div class="focus-card reveal reveal-d4">
+      <div class="focus-icon">🧩</div>
+      <div class="focus-title">Consulting Mindset & Frameworks</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact" style="background:var(--cream2);">
+  <div class="contact-inner reveal">
+    <div>
+      <div class="sec-tag" style="color:var(--gold-lt);">Open to Conversations</div>
+      <h2 class="contact-h2">Let's Build, Scale,<br>& <em>Solve Real Problems</em><br>Together.</h2>
+      <p class="contact-sub">Whether it's a consulting discussion, a growth project for Glorify Digital, a collaboration, or just a sharp conversation about business — I'm always open.</p>
+      <div class="hero-actions">
+        <a href="mailto:your@email.com" class="btn-dark" style="background:var(--gold);box-shadow:0 4px 20px rgba(184,147,58,0.3);">Send an Email ↗</a>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" class="btn-outline" style="border-color:rgba(245,242,236,0.2);color:var(--cream);">LinkedIn →</a>
+      </div>
+    </div>
+    <div class="contact-links">
+      <a href="https://linkedin.com/in/yourprofile" class="contact-link" target="_blank">
+        <div class="contact-link-icon">💼</div>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-val">linkedin.com/in/vanshlohia</div>
+        </div>
+      </a>
+      <a href="mailto:vansh@glorifydigital.com" class="contact-link">
+        <div class="contact-link-icon">📧</div>
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-val">vansh@glorifydigital.com</div>
+        </div>
+      </a>
+      <a href="https://wa.me/91XXXXXXXXXX" class="contact-link" target="_blank">
+        <div class="contact-link-icon">💬</div>
+        <div>
+          <div class="contact-link-label">WhatsApp</div>
+          <div class="contact-link-val">+91 XXXXX XXXXX</div>
+        </div>
+      </a>
+      <a href="https://instagram.com/yourhandle" class="contact-link" target="_blank">
+        <div class="contact-link-icon">📸</div>
+        <div>
+          <div class="contact-link-label">Instagram</div>
+          <div class="contact-link-val">@glorifydigital</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">Vansh <em>Lohia</em></div>
+  <p>© 2026 · Built with intent. Grown with time.</p>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#projects">Work</a>
+    <a href="#achievements">Wins</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+const cur = document.getElementById('cursor');
+const trail = document.getElementById('cursor-trail');
+let mx=0,my=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+(function loop(){
+  tx+=(mx-tx)*0.12;ty+=(my-ty)*0.12;
+  trail.style.left=tx+'px';trail.style.top=ty+'px';
+  requestAnimationFrame(loop);
+})();
+
+/* ── NAV SCROLL ── */
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>60);
+});
+
+/* ── SCROLL REVEAL ── */
+const revels=document.querySelectorAll('.reveal');
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('up');});
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+revels.forEach(el=>ro.observe(el));
+
+/* ── SKILL BARS ── */
+const bars=document.querySelectorAll('.skill-bar-fill');
+const bo=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const w=e.target.dataset.w;
+      e.target.style.width=w+'%';
+      bo.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+bars.forEach(b=>bo.observe(b));
+
+/* ── SMOOTH CURSOR FOR LINKS ── */
+document.querySelectorAll('a,button').forEach(el=>{
+  el.style.cursor='none';
+});
+
+/* ── ACTIVE NAV ── */
+const sections=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let current='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-180)current=s.id;});
+  links.forEach(a=>{
+    const active=a.getAttribute('href')==='#'+current;
+    a.style.color=active&&!a.classList.contains('nav-cta')?'var(--ink)':'';
+  });
+},{passive:true});
+</script>
+</body>
+</html>
